@@ -18,6 +18,13 @@ ng new NovoProjeto
 
 ver mais: https://angular.io/cli/new
 
+# Um pouco sobre typescript:
+
+Typescript nada mais é do que um SuperSet javascript, e o que isso significa? Isso significa que o typescript foi uma iniciativa da Microsoft de deixar o
+JS mais orientado a objetos, e sem perder a essência do js. Pensa assim js é o Charmander, o typescript é o Charizard!
+
+Apesar das vnatagens, é bom lembrar que os navegadores atualmente não entendem o TS e, portanto, todo código q é escrito em TS é transpilado para um JS correspondente.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
