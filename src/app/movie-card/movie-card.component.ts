@@ -56,4 +56,6 @@ export class MovieCardComponent implements OnInit, OnDestroy {
   deleteMovie(id: string): void {
     this.delete.emit(id);
   }
+
+  // Como eu poderia mostrar o filme que um usuario selecionou logo abaixo do meu titulo?
 }
