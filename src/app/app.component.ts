@@ -49,6 +49,7 @@ export class AppComponent implements OnInit {
 
     this.movies = [
       {
+        id: '1',
         title: `The Lord of The Rings: The fellowship of the rings`,
         sinopse: `A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.`,
         img: `https://images.unsplash.com/photo-1477666250292-1419fac4c25c?auto=format&fit=crop&w=667&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D`,
@@ -57,6 +58,7 @@ export class AppComponent implements OnInit {
       },
 
       new Movie(
+        '2',
         `The Lord of the Rings: The Two Towers`,
         `While Frodo and Sam edge closer to Mordor with the help of the shifty Gollum, the divided fellowship makes a stand against Sauron's new ally, Saruman, and his hordes of Isengard.`,
         `https://images.unsplash.com/photo-1477666250292-1419fac4c25c?auto=format&fit=crop&w=667&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D`,
@@ -64,6 +66,7 @@ export class AppComponent implements OnInit {
         10
       ),
       new Movie(
+        '3',
         `The Lord of the Rings: The Return of the King`,
         `Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.`,
         `https://images.unsplash.com/photo-1477666250292-1419fac4c25c?auto=format&fit=crop&w=667&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D`,

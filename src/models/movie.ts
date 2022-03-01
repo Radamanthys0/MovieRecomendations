@@ -13,6 +13,7 @@ export class Movie {
    */
   title: string;
 
+  id: string;
   img: string;
   sinopse: string;
 
@@ -55,6 +56,7 @@ export class Movie {
    * @memberof Movie
    */
   constructor(
+    id: string,
     title: string,
     sinopse: string,
     img: string,
@@ -64,6 +66,7 @@ export class Movie {
   ) {
     // o operador "??" ou operador de coalescência nula retorna o seu operando do lado direito quando o seu operador do lado esquerdo é null ou undefined.
     // Caso contrário, ele retorna o seu operando do lado esquerdo.
+    this.id = id;
     this.title = title ?? '';
     this.sinopse = sinopse ?? '';
     this.img = img ?? '';
