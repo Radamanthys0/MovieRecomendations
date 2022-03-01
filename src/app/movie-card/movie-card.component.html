@@ -1,4 +1,4 @@
-<div class="wrapper" *ngIf="movie">
+<div class="wrapper" *ngIf="movie" (click)="clickMovie(movie.title)">
     <div class="card">
         <img [src]="movie?.img" />
         <div class="info">

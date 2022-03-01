@@ -12,6 +12,8 @@ export class AppComponent implements OnInit {
 
   movies: Array<Movie> = new Array<Movie>();
 
+  movieSelected = '';
+
   ngOnInit(): void {
     this.movies = [
       {
@@ -47,5 +49,9 @@ export class AppComponent implements OnInit {
   deleteMovie(id: string): void {
     const index = this.movies.findIndex((movie) => movie.id === id);
     this.movies.splice(index, 1);
+  }
+
+  displayMovieSelected(title: string) {
+    this.movieSelected = title;
   }
 }

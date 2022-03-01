@@ -11,30 +11,32 @@ import {
 /**+
  * o Decorator Component irá definir algumas propriedades basicas do nosso componente, como por exemplo o html.
  */
-// @Component({
-//   selector: 'app-movie-card',
-//   templateUrl: './movie-card.component.html',
-//   styleUrls: ['./movie-card.component.scss'],
-// })
-// exemplo decorator
 @Component({
   selector: 'app-movie-card',
-  template: `<h1>HELLO WORLD</h1>`,
-  styles: [
-    `
-      h1 {
-        color: white;
-        text-decoration: underline;
-      }
-    `,
-  ],
+  templateUrl: './movie-card.component.html',
+  styleUrls: ['./movie-card.component.scss'],
 })
+// exemplo decorator
+// @Component({
+//   selector: 'app-movie-card',
+//   template: `<h1>HELLO WORLD</h1>`,
+//   styles: [
+//     `
+//       h1 {
+//         color: white;
+//         text-decoration: underline;
+//       }
+//     `,
+//   ],
+// })
 export class MovieCardComponent implements OnInit, OnDestroy {
   // para passar um dado de um componente pai, para um componente filho, utilizamos o @Input. veja mais no readme:
   @Input() movie: Movie | null = null;
 
   // para passar um dado de um componente filho, para um componente pai, utilizamos o @Output. veja mais no readme:
   @Output() delete: EventEmitter<string> = new EventEmitter<string>();
+  @Output() displayMovieSelected: EventEmitter<string> =
+    new EventEmitter<string>();
 
   constructor() {}
 
@@ -55,5 +57,9 @@ export class MovieCardComponent implements OnInit, OnDestroy {
 
   deleteMovie(id: string): void {
     this.delete.emit(id);
+  }
+
+  clickMovie(title: string): void {
+    this.displayMovieSelected.emit(title);
   }
 }
