@@ -1,13 +1,10 @@
 <h1>{{ title }}</h1>
 
-<!-- para chamar um componente dentro de outro, basta ultilizar a propriedade selector do componente. no caso app-movie-card -->
-<app-movie-card></app-movie-card>
-
-<!-- descomentar essa linha apenas quando descomentar "exemplo decorator" em movie-card.component -->
-<!-- <div class="content">
+<div class="content">
     <div class="moviesList">
+        <!-- para chamar um componente dentro de outro, basta ultilizar a propriedade selector do componente. no caso app-movie-card -->
         <div *ngFor="let movie of movies">
             <app-movie-card [movie]="movie" (delete)="deleteMovie($event)"></app-movie-card>
         </div>
     </div>
-</div> -->
+</div>
