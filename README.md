@@ -132,6 +132,64 @@ e já no componente passar via binding o que for necessario:
 
 veja mais em: https://maffonso.medium.com/angular-8-interação-entre-componentes-cf19b46e624e
 
+### html/Estilo
+
+Quando ultizamos templateUrl e styleUrls, precisamos de arquivos únicos para oq se tornará nosso HTML e, nossa folha de estilo. Aqui não tem segredo, toda a construção da página será feita nestes arquivos. No exemplo desta aplicação utilizamos SCSS, que definimos lá na criação da aplicação. Basicamente o SCSS é o css tradicional, com algumas funcionalidades a mais (css = evee, SCSS = flareon, Sass = Vaporeon), vc pode ver mais em https://sass-lang.com.
+
+### teste
+
+É comum ao criar um componente ou um service via cli, é também criado um arquivo `.spec.ts`. Este arquivo é utilizado pelo Angular para executar testes unitários referentes aquele componente ou service.
+
+Ao abrir este arquivo, vc se depara com algumas coisas já prontas. vamos entender um pouco de cada:
+
+Primeiramente temos o describe e é o primeiro bloco do teste a ser executado. é nele que vamos definir dependencias e descrever nossos testes.
+
+```ts
+describe('MovieCardComponent', () => { ... }
+```
+
+logo em seguida temos o bloco beforeEach. Este bloco será executado antes de qualquer outra coisa e, já como padrão, ele simula a declaração do component e prepara o `testBed`
+(que nada mais é que o pacote que resolve os testes do Angular), para executar os testes que iremos escrever
+
+```ts
+beforeEach(async () => {
+  await TestBed.configureTestingModule({
+    declarations: [MovieCardComponent],
+  }).compileComponents();
+});
+
+beforeEach(() => {
+  fixture = TestBed.createComponent(MovieCardComponent);
+  component = fixture.componentInstance;
+  fixture.detectChanges();
+});
+```
+
+Finalmente temos o bloco `it`. Este bloco é o teste propriamente dito. Como padrão, já existe um primeiro teste escrito que é, o `should create`. Este teste garante que, ao chamar este componente, ele será criado e renderizado.
+
+```ts
+it("should create", () => {
+  expect(component).toBeTruthy();
+});
+```
+
+A partir daí podemos criar nossos próprios testes, por exemplo:
+
+```ts
+it(`should render 'HELLO WORLD'`, () => {
+  const fixture = TestBed.createComponent(MovieCardComponent);
+  fixture.detectChanges();
+  const compiled = fixture.nativeElement;
+  expect(compiled.querySelector("h1").textContent).toContain("HELLO WORLD");
+});
+```
+
+Traduzindo:
+
+- ` const fixture = TestBed.createComponent(MovieCardComponent); fixture.detectChanges();` : pegamos uma instancia do componente
+- `const compiled = fixture.nativeElement;` : pegamos o html
+- ` expect(compiled.querySelector("h1").textContent).toContain("HELLO WORLD");`: criamos uma condição, esperamos (`expect`) que exista um `<h1>` que possua (`toContain`) o texto `HELLO WORLD`;
+
 ### padrao na criação do projeto Angular
 
 ## Development server

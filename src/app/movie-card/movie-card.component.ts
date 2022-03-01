@@ -16,7 +16,6 @@ import {
 //   templateUrl: './movie-card.component.html',
 //   styleUrls: ['./movie-card.component.scss'],
 // })
-
 // exemplo decorator
 @Component({
   selector: 'app-movie-card',
