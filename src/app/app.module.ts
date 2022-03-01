@@ -3,16 +3,20 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MovieCardComponent } from './movie-card/movie-card.component';
 
+/**
+ * É necessario q haja ao menos um modulo na aplicacao, sendo esse o NgModule
+ *
+ */
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    // Uma vez que criamos um component, precisamos declarar ele em um modulo
+    MovieCardComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, AppRoutingModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

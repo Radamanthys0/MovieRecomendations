@@ -4,7 +4,7 @@ Este projeto tem como função mostrar alguns conceitos relacionados ao desenvol
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.0.
 
-# Dependencias:
+# Dependências:
 
 Para iniciair um projeto angular, vamos precisar basicamente de duas ferramentas respectivamente: o node (https://nodejs.org/en/) e o Angular Cli (https://www.npmjs.com/package/@angular/cli).
 
@@ -23,7 +23,116 @@ ver mais: https://angular.io/cli/new
 Typescript nada mais é do que um SuperSet javascript, e o que isso significa? Isso significa que o typescript foi uma iniciativa da Microsoft de deixar o
 JS mais orientado a objetos, e sem perder a essência do js. Pensa assim js é o Charmander, o typescript é o Charizard!
 
-Apesar das vnatagens, é bom lembrar que os navegadores atualmente não entendem o TS e, portanto, todo código q é escrito em TS é transpilado para um JS correspondente.
+Apesar das vantagens, é bom lembrar que os navegadores atualmente não entendem o TS e, portanto, todo código q é escrito em TS é transpilado para um JS correspondente.
+
+# Anatomia de um projeto Angular
+
+A seguir um pouco sobre as unidade que compõe o Angular. Estas unidades, vão comunicar entre si e o principal aqui é lembrar de duas palavrinhas mágicas:
+`coesão` e `Acoplamento`. isso pq nos vamos tentar estruturar nossa aplicação de tal forma que aumente a coesão e diminua o acoplamento. Mas primeiro
+vamos entender cada coisa.
+
+## componente:
+
+Para criar um novo componente, é simples como o dia, basta no terminal, executar o seguinte comando:
+
+```
+ng g c NovoComponente
+```
+
+`Note que ele já adiciona dentro do "declaration" do modulo o componente criado`
+
+Cada componente é composto por algumas partes:
+
+### Component
+
+O component ou o arquivo que possui final `.component.ts` é a nossa controller. É no component que definimos algumas propriedades básicas e descrevemos a logica que aquele componente terá que desempenhar.
+
+Ao entrar no arquivo, vc se depara com o que chamamos de `decorator` Component. Um `decorator` nada mais é que um recurso utilizado para `vincular a uma classe ou método um metadata`. No caso do decorator Component, estamos vinculando aquela classe, as propriedades selector (a forma q vamos chamar aquele component no html), templateUrl: (arquivo ou string q irá ser interpretada como html) e styleUrls (arquivo ou string q irá ser interpretada como nossa folha de estilo). É bom lembrar que essas não são as únicas opções de metadados q temos, para saber mais acesse: https://angular.io/api/core/Component
+
+```ts
+@Component({
+  selector: 'app-movie-card',
+  templateUrl: './movie-card.component.html',
+  styleUrls: ['./movie-card.component.scss']
+})
+```
+
+#### Ciclo de vida de um componente
+
+Do momento em que o componente é renderizado na tela, até o momento em que o componente é destruído, o Angular nos fornce diversas interfaces que vão nos ajudar a controlar qualquer logica que esteja vinculada a vida do componente.
+
+para utilizar, basta implementar a interface desejada na classe do componente:
+
+```ts
+export class MovieCardComponent implements OnInit { ...
+```
+
+e escrever a função :
+
+```ts
+ ngOnInit(): void { ... }
+```
+
+Veja mais em : https://angular.io/guide/lifecycle-hooks
+
+#### Comunicação entre componentes
+
+Não é incomum que um componente precise de comunicar com o outro. Para isso, o Angular nos da algumas ferramentas.
+
+##### @Input
+
+Para a comunicação entre um componente pai, e um componente filho, podemos utilizar o `@Input`. Ele funciona de maneira bem prática. No componente filho, basta adicionar um atributo da seguinte maneira:
+
+```ts
+@Input() movie: Movie | null = null;
+```
+
+e já no componente passar via binding o que for necessario:
+
+```html
+<app-movie-card [movie]="movie"></app-movie-card>
+```
+
+##### @Output
+
+Para a comunicação entre um componente filho, e um componente pai, podemos utilizar o `@Output`. É preciso lembrar que, essa comunicação acontece via evento e, portanto precisamos no component do pai uma função para resolver este evento. então vamos lá, no componente filho, iremos adicionar primeiramente:
+
+```ts
+@Output() delete: EventEmitter<string> = new EventEmitter<string>();
+
+```
+
+Esta primeira linha, serve para criar o evento que será disparado para o componente pai. Para isso, utilizamos o decorator @Output, juntamente com o EventEmitter, que vai resolver tudo para a gente. Note que podemos adicionar um tipo de dado q iremos trafegar, no exemplo é uma string.
+
+Lembre-se de importarcorretamente do pacote angula/core (`import {Output, EventEmitter} from '@angular/core'`). Em seguida, vamos disparar esse evento, da seguinte forma:
+
+```ts
+this.delete.emit(id);
+```
+
+O `.emit` fará a mágica de disparar um evento de dom, contentado o `id`.
+
+Uma vez que o evento é disparado, vamos lembrar da forma em que o Angular captura eventos, isso mesmo, vamos utilizar novamente um binding.
+
+```html
+<app-movie-card (delete)="deleteMovie($event)"></app-movie-card>
+```
+
+Através do binding de evento do angular, vamos capturar o evento que foi emitido e vamos tratar dentro da função `deleteMovie()`. Por se tratar de um evento q contém um conteúdo interessante para a gente, vamos passar como parâmetro o $event. O `$event` serve para capturar as informações daquele evento de dom, no nosso caso é apenas o id. No final, a função ficará assim:
+
+```ts
+ deleteMovie(id: string):void { ... }
+```
+
+e já no componente passar via binding o que for necessario:
+
+```html
+<app-movie-card [movie]="movie"></app-movie-card>
+```
+
+veja mais em: https://maffonso.medium.com/angular-8-interação-entre-componentes-cf19b46e624e
+
+### padrao na criação do projeto Angular
 
 ## Development server
 

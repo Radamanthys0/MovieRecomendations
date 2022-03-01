@@ -1,0 +1,12 @@
+<div class="wrapper" *ngIf="movie">
+    <div class="card">
+        <img [src]="movie?.img" />
+        <div class="info">
+            <h1>{{ movie?.title }}</h1>
+            <p>
+                {{ movie?.sinopse }}
+            </p>
+            <button (click)="deleteMovie(movie.id)">Remove</button>
+        </div>
+    </div>
+</div>
