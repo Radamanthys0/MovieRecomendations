@@ -1,0 +1,14 @@
+<div *ngIf="movie">
+    <div class="content">
+        <div class="content-img">
+            <img [src]="movie?.img" />
+        </div>
+        <div class="content-info">
+            <h1>{{ movie?.title }}</h1>
+            <div class="sinopse">{{ movie?.sinopse }}</div>
+            <div class="pos-rating">
+                <div class="rating">{{ movie?.rating }}</div>
+            </div>
+        </div>
+    </div>
+</div>

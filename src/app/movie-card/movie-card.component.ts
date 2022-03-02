@@ -7,6 +7,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /**+
  * o Decorator Component irá definir algumas propriedades basicas do nosso componente, como por exemplo o html.
@@ -16,19 +17,6 @@ import {
   templateUrl: './movie-card.component.html',
   styleUrls: ['./movie-card.component.scss'],
 })
-// exemplo decorator
-// @Component({
-//   selector: 'app-movie-card',
-//   template: `<h1>HELLO WORLD</h1>`,
-//   styles: [
-//     `
-//       h1 {
-//         color: white;
-//         text-decoration: underline;
-//       }
-//     `,
-//   ],
-// })
 export class MovieCardComponent implements OnInit, OnDestroy {
   // para passar um dado de um componente pai, para um componente filho, utilizamos o @Input. veja mais no readme:
   @Input() movie: Movie | null = null;
@@ -36,7 +24,10 @@ export class MovieCardComponent implements OnInit, OnDestroy {
   // para passar um dado de um componente filho, para um componente pai, utilizamos o @Output. veja mais no readme:
   @Output() delete: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor() {}
+  constructor(
+    private _route: Router,
+    private _activatedRoute: ActivatedRoute
+  ) {}
 
   /**
    * cada componente no Angular segue um ciclo de vida, que acontece desde o momento em que o componente é renderizado na tela até o momento que ele seja destruido.
@@ -44,16 +35,14 @@ export class MovieCardComponent implements OnInit, OnDestroy {
    * ngOnDestroy (acontece quando o componente for destruido). no readMe existe uma sessao falando mais sobre
    *
    */
-  ngOnInit(): void {
-    console.log('componente criado');
-    console.table(this.movie);
-  }
+  ngOnInit(): void {}
 
-  ngOnDestroy(): void {
-    console.log('componente destruido');
-  }
+  ngOnDestroy(): void {}
 
   deleteMovie(id: string): void {
     this.delete.emit(id);
+  }
+  seeMore(id: string): void {
+    this._route.navigate([`movie/${id}`]);
   }
 }

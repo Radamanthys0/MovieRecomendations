@@ -1,0 +1,20 @@
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.moviesList {
+    display: flex;
+    color: #fff;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: stretch;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    color: white;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+}

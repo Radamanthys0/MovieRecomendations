@@ -50,4 +50,16 @@ export class MovieService {
       .get<Array<Movie>>(`${environment.apiUrl}movies`)
       .toPromise();
   }
+
+  getMovie(id: string): Observable<Array<Movie>> {
+    return this._http
+      .get<Array<Movie>>(`${environment.apiUrl}movies`, { params: { id: id } })
+      .pipe(
+        retry(3),
+        catchError((error) => {
+          console.log(error);
+          return throwError(error.message);
+        })
+      );
+  }
 }

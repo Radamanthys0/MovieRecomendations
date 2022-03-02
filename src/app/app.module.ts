@@ -6,6 +6,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MovieCardComponent } from './movie-card/movie-card.component';
+import { MovieDetailsComponent } from './movie-details/movie-details.component';
+import { MovieListComponent } from './movie-list/movie-list.component';
 
 /**
  * É necessario q haja ao menos um modulo na aplicacao, sendo esse o NgModule
@@ -16,6 +18,7 @@ import { MovieCardComponent } from './movie-card/movie-card.component';
     AppComponent,
     // Uma vez que criamos um component, precisamos declarar ele em um modulo
     MovieCardComponent,
+    MovieListComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [

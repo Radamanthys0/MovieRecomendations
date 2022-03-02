@@ -325,7 +325,156 @@ Após a instalação, na pasta deste projeto execute:
 json-server --watch db.json
 ```
 
-## componente
+## Module
+
+Afim de organizar melhor e, anter a coesão com baixo acoplamento, é interessante dividir nossa aplicação em vários módulos. O módulo, tem duas obrigações importantes:
+
+- declarar componentes
+- resolver dependencias que aqueles componentes precisam.
+
+O Módulo é um grante paizão, ele cuida das coisas q os componentes filhos precisam e os representam legalmente.
+
+Para criar um módulo, podemos utilizar o cli:
+
+```
+ng g m NovoModule
+```
+
+# Rotas
+
+É comum quando estamos desenvolvendo uma aplicação fronend que, exista uma navegação quando modificamos a url. No padrão ssr essa navegação é feita por páginas, ou seja, sempre q alteramos a url, buscamos uma página (um html) novo. Para os SPA's isto não existe, uma vez que temos apenas uma página, então como podemos manter essa navegação utilizando a url?
+Para responder essa pergunta o Angular nos disponiibliza uma serie de ferramentas para tratar essa navegação, a isso chamamos de `Rotas`
+
+Do ponto de vista do Angular, cada "página" é um componente diferente e a navegação acontece colocando e removendo esses componentes de acordo com a url. Em outras palavras, o Angular faz um atch de `path` (cada parte da url) com algum componente especificado. Vejamos um exemplo:
+
+```ts
+const routes: Routes = [
+  {
+    path: "list",
+    component: MovieListComponent,
+  },
+];
+```
+
+Nesse caso, fazemos um match do path `list` com o componente `MovieListComponent`. Dessa forma, quando acessamos a url: `http://localhost:4200/list`, teremos renderizado o componente MovieListComponent. Este match é feito analizando o modulo de rota (ex: app-routing.module.ts) e o componente é renderizado no lugar da tag `<router-outlet>` (nesse projeto, está dentro de app.component.html)
+
+```html
+<router-outlet></router-outlet>
+```
+
+## Navegaçao
+
+Para navegar entre rotas, o Angular nos fornece dois services bem interessantes: o `Router` e o `ActivatedRoute`.
+
+```ts
+  constructor(
+    private _route: Router,
+    private _activatedRoute: ActivatedRoute
+  ) {}
+
+```
+
+O `Router` é responsável por gerenciar a navegação, dessa forma é ele quem vamos chamar quando quisermos mudar de página:
+
+```ts
+this._route.navigate([`movie/${id}`]);
+```
+
+Já o ActivatedRoute, tem informações referentes a rota atual. dessa forma, caso alguma rota tenha um parametro ou um query param, é ele que vamos utilizar.
+
+```ts
+this._activatedRoute.paramMap.subscribe((res) => {
+  console.log(res);
+  console.log(res.get("id"));
+});
+```
+
+## lazy loading
+
+Imagine que em sua aplicação existam 2 telas, porém a 2º tela é raramente acessada, será que vale a pena trazer todos os componentes, dependencias deessa segunda tela, sempre que carregar a aplicação? talvez uma boa solução seja trazer os dados da 2 tela somente quando o usuário tentar acessá-la. Neste caso, podemos dividir essas duas telas em módulos separados e assim, a aplicação sempre carrega o primeiro módulo mas deixa o segundo módulo apenas para quando o usuario tentar acessar. Chamamos isso de `lazy loading`.
+
+para implementar, basta que, o segundo módulo possua tabém um arquivo de rota que resolva o match de path e componente. além disso, no modulo de rota pai, deve importa o modulo, ao invés do componente. fica assim:
+
+```ts
+
+ {
+    path: 'movie',
+    loadChildren: () =>
+      import('./movie-details/movie-details.module').then((m) => m.MovieDetailsModule),
+  },
+
+```
+
+Repare que, utilizamos uma promise. Ao invés dw carregar direto tudo do segundo módulo, vamos prometer que existe esse segundo módulo e, resolver quando for conveniente.
+
+Em resumo, teremos:
+
+- criar um modulo novo e importar o arquivo de rota referente a este modulo (ex: movie-details.module.ts)
+
+```ts
+@NgModule({
+  declarations: [...],
+  imports: [MovieDetailsRoutingModule, ... ],
+})
+export class MovieDetailsModule {}
+```
+
+- criar o arquivo de rota referente a este modulo, vinculando path com componente. (ex: movie-details-routing.module.ts)
+
+```ts
+const routes: Routes = [
+  {
+    path: "",
+    component: MovieDetailsComponent,
+  },
+];
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
+export class MovieDetailsRoutingModule {}
+```
+
+- Atualizar o arquivo de rota referente ao modulo pai. (ex: app-routing.module.ts)
+
+```ts
+const routes: Routes = [
+  {
+    path: 'movie',
+    loadChildren: () =>
+      import('./movie-details/movie-details.module').then(
+        (m) => m.MovieDetailsModule
+      ),
+  },
+
+  ....
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}
+```
+
+### Routing Module
+
+Quanfo vamos utilizar lazy loading para resolver uma rota, vamos adicionar ao módulo várias informações sobre as rotas. para organizar melhor, o Angular costuma tratar essas informações referentes a rota em um arquivo seprado que tbm é um módulo. Este arquivo geralmente tem nome `-routing.module.ts` e, pode ser criado fácilmente na hora que criamos o modulo adicionando no comando o `--routing`.
+
+```
+ng g m NovoModule --routing
+```
+
+Adicionamos ao arquivo informacoes das rotas que queremos. de forma simples, um routing module pode conter um ou mais rotas que o Angular vai interpetar e fazer um match entre o path que foi escrito na url e algum componente.
+
+```ts
+const routes: Routes = [
+  {
+    path: "",
+    component: MovieDetailsComponent,
+  },
+];
+```
 
 # padrão na criação do projeto Angular
 
