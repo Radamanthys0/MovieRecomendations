@@ -6,7 +6,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 # Dependências:
 
-Para iniciair um projeto angular, vamos precisar basicamente de duas ferramentas respectivamente: o node (https://nodejs.org/en/) e o Angular Cli (https://www.npmjs.com/package/@angular/cli).
+Para iniciar um projeto angular, vamos precisar basicamente de duas ferramentas respectivamente: o node (https://nodejs.org/en/) e o Angular Cli (https://www.npmjs.com/package/@angular/cli).
 
 # Criação de um novo projeto Angular:
 
@@ -39,7 +39,7 @@ Para criar um novo componente, é simples como o dia, basta no terminal, executa
 ng g c NovoComponente
 ```
 
-`Note que ele já adiciona dentro do "declaration" do modulo o componente criado`
+`Note que ele já adiciona dentro do "declaration" do módulo o componente criado`
 
 Cada componente é composto por algumas partes:
 
@@ -87,7 +87,7 @@ Para a comunicação entre um componente pai, e um componente filho, podemos uti
 @Input() movie: Movie | null = null;
 ```
 
-e já no componente passar via binding o que for necessario:
+e já no componente passar via binding o que for necessário:
 
 ```html
 <app-movie-card [movie]="movie"></app-movie-card>
@@ -104,13 +104,13 @@ Para a comunicação entre um componente filho, e um componente pai, podemos uti
 
 Esta primeira linha, serve para criar o evento que será disparado para o componente pai. Para isso, utilizamos o decorator @Output, juntamente com o EventEmitter, que vai resolver tudo para a gente. Note que podemos adicionar um tipo de dado q iremos trafegar, no exemplo é uma string.
 
-Lembre-se de importarcorretamente do pacote angula/core (`import {Output, EventEmitter} from '@angular/core'`). Em seguida, vamos disparar esse evento, da seguinte forma:
+Lembre-se de importar corretamente do pacote angula/core (`import {Output, EventEmitter} from '@angular/core'`). Em seguida, vamos disparar esse evento, da seguinte forma:
 
 ```ts
 this.delete.emit(id);
 ```
 
-O `.emit` fará a mágica de disparar um evento de dom, contentado o `id`.
+O `.emit` fará a mágica de disparar um evento de dom, contendo o `id`.
 
 Uma vez que o evento é disparado, vamos lembrar da forma em que o Angular captura eventos, isso mesmo, vamos utilizar novamente um binding.
 
@@ -124,7 +124,7 @@ Através do binding de evento do angular, vamos capturar o evento que foi emitid
  deleteMovie(id: string):void { ... }
 ```
 
-e já no componente passar via binding o que for necessario:
+e já no componente passar via binding o que for necessário:
 
 ```html
 <app-movie-card [movie]="movie"></app-movie-card>
@@ -134,7 +134,7 @@ veja mais em: https://maffonso.medium.com/angular-8-interação-entre-componente
 
 ### html/Estilo
 
-Quando ultizamos templateUrl e styleUrls, precisamos de arquivos únicos para oq se tornará nosso HTML e, nossa folha de estilo. Aqui não tem segredo, toda a construção da página será feita nestes arquivos. No exemplo desta aplicação utilizamos SCSS, que definimos lá na criação da aplicação. Basicamente o SCSS é o css tradicional, com algumas funcionalidades a mais (css = evee, SCSS = flareon, Sass = Vaporeon), vc pode ver mais em https://sass-lang.com.
+Quando utilizamos templateUrl e styleUrls, precisamos de arquivos únicos para oq se tornará nosso HTML e, nossa folha de estilo. Aqui não tem segredo, toda a construção da página será feita nestes arquivos. No exemplo desta aplicação utilizamos SCSS, que definimos lá na criação da aplicação. Basicamente o SCSS é o css tradicional, com algumas funcionalidades a mais (css = evee, SCSS = flareon, Sass = Vaporeon), vc pode ver mais em https://sass-lang.com.
 
 ### teste
 
@@ -142,7 +142,7 @@ Quando ultizamos templateUrl e styleUrls, precisamos de arquivos únicos para oq
 
 Ao abrir este arquivo, vc se depara com algumas coisas já prontas. vamos entender um pouco de cada:
 
-Primeiramente temos o describe e é o primeiro bloco do teste a ser executado. é nele que vamos definir dependencias e descrever nossos testes.
+Primeiramente temos o describe e é o primeiro bloco do teste a ser executado. é nele que vamos definir dependências e descrever nossos testes.
 
 ```ts
 describe('MovieCardComponent', () => { ... }
@@ -186,11 +186,146 @@ it(`should render 'HELLO WORLD'`, () => {
 
 Traduzindo:
 
-- ` const fixture = TestBed.createComponent(MovieCardComponent); fixture.detectChanges();` : pegamos uma instancia do componente
+- ` const fixture = TestBed.createComponent(MovieCardComponent); fixture.detectChanges();` : pegamos uma instância do componente
 - `const compiled = fixture.nativeElement;` : pegamos o html
 - ` expect(compiled.querySelector("h1").textContent).toContain("HELLO WORLD");`: criamos uma condição, esperamos (`expect`) que exista um `<h1>` que possua (`toContain`) o texto `HELLO WORLD`;
 
-### padrao na criação do projeto Angular
+### padrão na criação do projeto Angular
+
+## service:
+
+Sempre que tivermos que tratar algo externo a um componente, vamos utlizar serviços. Desta forma, caso seja necessário consumir uma api, ou até mesmo tratar uma
+comunicação entre mais de dois componentes, até mesmo algo relacionado a segurnaça, vamos utilizar um service.
+
+Para criar um novo service, também é simples como o dia, basta no terminal, executar o seguinte comando:
+
+```
+ng g service NovoService
+```
+
+É bom lembrar que no Angular `todo service funciona como um singleton`, desta forma, independente de onde eu acesse uma instância de um service, ela sempre será igual.
+
+Para utilizar um service em seu componente, basta adicionar ele no construtor. dessa forma:
+
+```ts
+export class AppComponent implements OnInit {
+
+  constructor(protected _movieService: MovieService) {...}
+
+  ...
+}
+```
+
+Ao fazer isso, vc tem uma instância daquele service e, pode chamar seus atributos funções dessa forma:
+
+```ts
+this._movieService.getMovies();
+```
+
+### Consumindo dados do backend
+
+Vamos entender um pouco sobre consumo de apis. A maioria das comunicaçõesfeitas entre o front e o back será feita através de requisições REST. O Angular já nos disponibiliza ferramentas para deixar nossa vida mais fácil. Para utilizá-las, basta importar no módulo de seu componente o `HttpClientModule`.
+
+```ts
+@NgModule({
+  declarations: [  ... ],
+  imports: [HttpClientModule, ...],
+  providers: [],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
+
+Uma vez que temos o HttpClientModule importado, podemos utilizar as suas ferramentas, para isso, basta chamar o `HttpClient` dentro de seu service.
+
+```ts
+export class MovieService {
+  constructor(protected _http: HttpClient) { ... }
+...
+}
+```
+
+Com o Http Client, podemos fazer requisições rest de uma maneira bem simples, uma vez que ele já nos disponibiliza funções específicas para cada uma das operações REST disponíveis. veja um exemplo de GET:
+
+```ts
+ getMovies(): Observable<Array<Movie>> {
+    return this._http.get<Array<Movie>>(`http://localhost:3000/movies`);
+  }
+...
+}
+```
+
+Toda requisição rest feita é um processo assíncrono, isso significa que ao fazer uma determinada requisição, temos que esperar o servidor responder e, aí sim executar determinada lógica. Existem várias formas de tratar essa assincronicidade, as mais comuns sendo a `Promise` e o `Observable`.
+
+A Promise consiste em uma promessa. Isso significa que, de maneira bem simples, ao invés de entregar um resultado na hora, eu vou fazer uma promessa de que aquele resultado existirá, É o famoso "Devo não nego, pago quando puder". (veja mais em: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise).
+
+O Observable consiste em um padrão de projeto que de maneira bem simples, `observa um objeto e notifica a sua mudança de estado` (veja mais em: https://www.devmedia.com.br/o-padrão-de-projeto-observer/22861 ).
+
+#### Observable
+
+É bom lembrar que como padrão, as funções do HttpClient retornam um `Observable`. Isso significa que, para ter acesso à resposta, temos que fazer um subscribe.
+
+```ts
+  this._movieService.getMovies().subscribe(
+      (movies) => {
+      ...
+      },
+      (error) => {
+        ...
+      }
+    );
+...
+}
+```
+
+Por se tratar de um observable, isso significa que podemos utilizar as várias ferramentas que a `rxjs` possui. Através do `pipe`, podemos adicionar por exemplo um `tratamento de erros` já no próprio service e até mesmo adicionar um `retry`, para tentar a requisição novamente caso ela de erros.
+
+```ts
+ return this._http.get<Array<Movie>>(`${environment.apiUrl}movies`).pipe(
+      retry(3),
+      catchError((error) => {
+        ...
+        return throwError(error.message);
+      })
+    );
+```
+
+#### Promisse
+
+`Todo Observable pode ser convertido facilmente em promise` e, portanto, podemos transformar uma requisição do httpClient em promise, caso seja conveniente. Para isso, basta adicionar um `.toPromise()`.
+
+```ts
+  async getMoviesAsync(): Promise<Array<Movie>> {
+    return await this._http
+      .get<Array<Movie>>(`${environment.apiUrl}movies`).toPromise();
+  }
+```
+
+E portanto a chamada da função ficaria:
+
+```ts
+  async getMovies() {
+    this.movies = await this._movieService.getMoviesAsync();
+  }
+```
+
+Mas por que usar promises ao invés de observables? Um dos motivos é a dependência de uma certa parte do código com relação à requisição. Em outras palavras, dependendo do cenário, precisamos esperar o resultado da requisição para aí sim executar alguma lógica. Podemos fazer isso facilmente utilizando o `async` e o `await`.
+
+#### JSON Server
+
+Em nosso exemplo, vamos buscar de um servidor, dados de vários filmes. Para isso, vamos utilizar um fake Backend com a lib JSON Server. Essa lib, basicamente cria um server node que disponibiliza um json como serviço. Para mais detalhes olhe o site: https://www.npmjs.com/package/json-server.
+
+Para utilizar o JSON Server basta instalar de forma global
+
+```
+npm install -g json-server
+```
+
+Após a instalação, na pasta deste projeto execute:
+
+```
+json-server --watch db.json
+```
 
 ## Development server
 
