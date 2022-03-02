@@ -190,8 +190,6 @@ Traduzindo:
 - `const compiled = fixture.nativeElement;` : pegamos o html
 - ` expect(compiled.querySelector("h1").textContent).toContain("HELLO WORLD");`: criamos uma condição, esperamos (`expect`) que exista um `<h1>` que possua (`toContain`) o texto `HELLO WORLD`;
 
-### padrão na criação do projeto Angular
-
 ## service:
 
 Sempre que tivermos que tratar algo externo a um componente, vamos utlizar serviços. Desta forma, caso seja necessário consumir uma api, ou até mesmo tratar uma
@@ -290,7 +288,7 @@ Por se tratar de um observable, isso significa que podemos utilizar as várias f
     );
 ```
 
-#### Promisse
+#### Promise
 
 `Todo Observable pode ser convertido facilmente em promise` e, portanto, podemos transformar uma requisição do httpClient em promise, caso seja conveniente. Para isso, basta adicionar um `.toPromise()`.
 
@@ -326,6 +324,10 @@ Após a instalação, na pasta deste projeto execute:
 ```
 json-server --watch db.json
 ```
+
+## componente
+
+# padrão na criação do projeto Angular
 
 ## Development server
 
