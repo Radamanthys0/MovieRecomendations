@@ -1,3 +1,5 @@
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MovieListComponent } from './movie-list.component';
@@ -8,9 +10,9 @@ describe('MovieListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MovieListComponent ]
-    })
-    .compileComponents();
+      imports: [RouterTestingModule, HttpClientModule],
+      declarations: [MovieListComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -21,5 +23,11 @@ describe('MovieListComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it(`should have as title 'Movie Recomendations'`, () => {
+    const fixture = TestBed.createComponent(MovieListComponent);
+    const app = fixture.componentInstance;
+    expect(app.title).toEqual('Movie Recomendations');
   });
 });

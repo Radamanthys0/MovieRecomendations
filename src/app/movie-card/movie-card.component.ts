@@ -24,10 +24,7 @@ export class MovieCardComponent implements OnInit, OnDestroy {
   // para passar um dado de um componente filho, para um componente pai, utilizamos o @Output. veja mais no readme:
   @Output() delete: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(
-    private _route: Router,
-    private _activatedRoute: ActivatedRoute
-  ) {}
+  constructor(private _route: Router) {}
 
   /**
    * cada componente no Angular segue um ciclo de vida, que acontece desde o momento em que o componente é renderizado na tela até o momento que ele seja destruido.
