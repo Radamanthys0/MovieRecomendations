@@ -1,4 +1,5 @@
-import { HttpClientModule } from '@angular/common/http';
+import { ResponseInterceptorInterceptor } from './interceptors/response-interceptor.interceptor';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -17,7 +18,13 @@ import { MovieCardComponent } from './movie-card/movie-card.component';
     MovieCardComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ResponseInterceptorInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
