@@ -236,7 +236,7 @@ Vamos entender um pouco sobre consumo de apis. A maioria das comunicaçõesfeita
 export class AppModule {}
 ```
 
-Uma vez que temos o HttpClientModule importado, podemos utilizar as suas ferramentas, para isso, basta chamar o `HttpClient` dentro de seu service.
+Uma vez que temos o HttpClientModule importado, podemos utilizar as suas ferramentas, para isso, basta chamar o `HttpClient` dentro de seu service (Veja mais em: https://angular.io/api/common/http/HttpClient#description).
 
 ```ts
 export class MovieService {
