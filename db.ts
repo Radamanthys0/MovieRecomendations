@@ -27,5 +27,41 @@ export const bd = {
       rating: 10,
       type: 'movie',
     },
+    {
+      id: '4',
+      title: 'The Karate Kid',
+      sinopse:
+        'A martial arts master agrees to teach karate to a bullied teenager.',
+      img: 'assets/img/karate_kid.PNG',
+      rating: 7.3,
+      type: 'movie',
+    },
+    {
+      id: '5',
+      title: 'The Karate Kid Part II',
+      sinopse:
+        "Daniel accompanies his mentor, Mr. Miyagi, to Miyagi's childhood home in Okinawa. Miyagi visits his dying father and confronts his old rival, while Daniel falls in love and inadvertently makes a new rival of his own.",
+      img: 'assets/img/karate_kid_II.PNG',
+      rating: 6.1,
+      type: 'movie',
+    },
+    {
+      id: '6',
+      title: 'The Karate Kid Part III',
+      sinopse:
+        'Ostracised villain John Kreese attempts to gain revenge on Daniel and Miyagi, with the help of a Vietnam War comrade, the wealthy owner of a toxic waste disposal business.',
+      img: 'assets/img/karate_kid_III.PNG',
+      rating: 5.3,
+      type: 'movie',
+    },
+    {
+      id: '7',
+      title: 'The Next Karate Kid',
+      sinopse:
+        'Mr. Miyagi is back and he takes a new pupil under his wing: a troubled adolescent girl.',
+      img: 'assets/img/next_karate_kid.PNG',
+      rating: 4.5,
+      type: 'movie',
+    },
   ],
 };
